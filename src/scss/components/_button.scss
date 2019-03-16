@@ -1,0 +1,19 @@
+.button {
+    transition: 0.2s;
+    padding: 10px;
+    margin-left: 15px;
+    border-radius: 20px;
+    background-color: $default-color;
+    color: $light-font-color;
+    font-size: bold;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $default-color--hover;
+    }
+
+    &:active {
+        background-color: $default-color;
+    }
+}

@@ -10,7 +10,74 @@
 
 <body>
   <div class="wrapper">
-
+    <div class="container">
+      <aside class="aside">
+        <div class="aside__welcome welcome">
+          <img class="welcome__photo" src="data:image/gif;base64,R0lGODlhEAAOALMAAOazToeHh0tLS/7LZv/0j
+            vb29t/f3//Ub//ge8WSLf/rhf/3kdbW1mxsbP//mf///yH5BAAAAAAALAAAAAAQAA4AAA
+            Re8L1Ekyky67QZ1hLnjM5UUde0ECwLJoExKcppV0aCcGCmTIHEIUEqjgaORCMxIC6e0Cc
+            guWw6aFjsVMkkIr7g77ZKPJjPZqIyd7sJAgVGoEGv2xsBxqNgYPj/gAwXEQA7"></img>
+          <div class="welcome__text">Добро пожаловать!</div>
+        </div>
+        <div class="aside__members members">
+          <div class="members__title">Участники: (<span class="members__count">1</span>)</div>
+          <ul class="members__list">
+            <li class="members__item">
+              <span class="members__name">Иван Клименко</span>
+            </li>
+          </ul>
+        </div>
+      </aside>
+      <main class="main">
+        <div class="main__chat chat">
+          <ul class="chat__message-list">
+            <li class="chat__message message">
+              <img class="message__img" src="data:image/gif;base64,R0lGODlhEAAOALMAAOazToeHh0tLS/7LZv/0j
+                vb29t/f3//Ub//ge8WSLf/rhf/3kdbW1mxsbP//mf///yH5BAAAAAAALAAAAAAQAA4AAA
+                Re8L1Ekyky67QZ1hLnjM5UUde0ECwLJoExKcppV0aCcGCmTIHEIUEqjgaORCMxIC6e0Cc
+                guWw6aFjsVMkkIr7g77ZKPJjPZqIyd7sJAgVGoEGv2xsBxqNgYPj/gAwXEQA7"></img>
+              <div class="message__content">
+                <div class="message__author">
+                  <span class="message__name">Иван Клименко</span>
+                  <span class="message__time">22:01</span>
+                </div>
+                <div class="message__text">А вот и сообщение!</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="main__input input">
+          <textarea type="text" class="input__textfield" placeholder="Введите сообщение"></textarea>
+          <button class="button input__button">Отправить</button>
+        </div>
+      </main>
+    </div>
+    <div class="auth">
+      <div class="auth__container">
+        <div class="auth__header">Авторизация</div>
+        <div class="auth__form">
+          <input type="text" class="auth__input auth__input" placeholder="Введите имя">
+          <input type="text" class="auth__input" placeholder="Введите никнейм">
+          <div class="auth__bottom-row">
+            <div class="auth__alert">Войти не удалось, инет сломался... Попробуйте ещё :(</div>
+            <button class="button auth__button">Войти</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="load-img">
+      <div class="load-img__container">
+        <div class="load-img__header">Загрузка фото</div>
+        <div class="load-img__form">
+          <div class="load-img__dropzone">Перетащите сюда фото</div>
+        </div>
+        <div class="load-img__bottom-row">
+          <div class="load-img__alert">Загрузить не удалось, инет сломался... Попробуйте ещё :(</div>
+          <button class="button load-img__button">Отмена</button>
+          <button class="button load-img__button">Загрузить</button>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 
