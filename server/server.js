@@ -1,12 +1,12 @@
 var WebSocketServer = new require('ws');
 
-console.log("Сервер запущен на порте: 8081");
+console.log("Сервер запущен на порте: 8080");
 // подключенные клиенты
 var clients = {};
 
 // WebSocket-сервер на порту 8081
 var webSocketServer = new WebSocketServer.Server({
-    port: 8081
+    port: 8080
 });
 webSocketServer.on('connection', function (ws) {
 
