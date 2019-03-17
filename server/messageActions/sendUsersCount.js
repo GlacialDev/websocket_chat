@@ -1,3 +1,5 @@
+'use strict'
+
 let sendUsersCount = function (clients) {
     let count = 0;
 

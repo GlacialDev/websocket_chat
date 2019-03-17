@@ -1,3 +1,5 @@
+'use strict'
+
 const WebSocketServer = new require('ws');
 const uuidv1 = require('uuid/v1');
 const authorize = require('./messageActions/authorize');

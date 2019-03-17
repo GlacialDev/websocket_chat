@@ -1,3 +1,5 @@
+'use strict'
+
 const membersCount = document.querySelector('.members__count');
 
 let getUsersCount = function (message) {

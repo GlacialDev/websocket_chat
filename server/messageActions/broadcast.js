@@ -1,3 +1,5 @@
+'use strict'
+
 const getTime = require('../functions/getTime')
 
 let broadcast = function (socket, message, clients) {

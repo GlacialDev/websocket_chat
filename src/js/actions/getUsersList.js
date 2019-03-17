@@ -1,3 +1,5 @@
+'use strict'
+
 let membersList = document.querySelector('.members__list');
 
 let getUsersList = function (message) {

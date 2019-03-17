@@ -1,3 +1,5 @@
+'use strict'
+
 const chatMessageList = document.querySelector('.chat__message-list');
 
 let showNewMessage = function (message) {

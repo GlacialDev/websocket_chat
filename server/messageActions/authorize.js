@@ -1,3 +1,5 @@
+'use strict'
+
 let authorize = function (socket, message) {
     socket.name = message.name;
     socket.nickname = message.nickname;

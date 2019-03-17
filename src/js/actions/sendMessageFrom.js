@@ -1,3 +1,5 @@
+'use strict'
+
 const inputTextfield = document.querySelector('.input__textfield');
 
 let sendMessageFrom = function (socket) {

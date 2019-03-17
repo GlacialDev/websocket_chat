@@ -1,3 +1,5 @@
+'use strict'
+
 let sendUsersList = function (clients) {
     let userlist = [];
 

@@ -1,3 +1,5 @@
+'use strict'
+
 import auth from './actions/auth';
 import getUsersList from './actions/getUsersList';
 import getUsersCount from './actions/getUsersCount';

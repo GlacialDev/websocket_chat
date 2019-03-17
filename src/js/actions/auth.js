@@ -1,3 +1,5 @@
+'use strict'
+
 let authBlock = document.querySelector('.auth');
 let inputs = authBlock.querySelectorAll('.auth__input');
 
