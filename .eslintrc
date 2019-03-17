@@ -37,7 +37,7 @@
             }
         ],
         "max-len": [
-            "error",
+            "warn",
             120,
             {
                 "ignoreComments": true
