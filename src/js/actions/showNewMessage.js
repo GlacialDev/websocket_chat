@@ -5,9 +5,11 @@ const chatMessageList = document.querySelector('.chat__message-list');
 let showNewMessage = function (message) {
   let li = document.createElement('li');
 
-  li.classList.add()
+  li.classList.add('chat__message');
+  li.classList.add('message');
+  li.dataset.author = message.nickname;
+
   li.innerHTML = `
-<li class="chat__message message">
   <img class="message__img" src="${message.base64image}"></img>
   <div class="message__content">
     <div class="message__author">
@@ -16,8 +18,8 @@ let showNewMessage = function (message) {
     </div>
     <div class="message__text">${message.text}</div>
   </div>
-</li>
 `;
+
   chatMessageList.appendChild(li);
 }
 

@@ -9,6 +9,8 @@ const broadcast = require('./messageActions/broadcast');
 const dbInit = require('./functions/dbInit');
 const searchUserDataInDB = require('./messageActions/searchUserDataInDB');
 const addNewUserInDB = require('./messageActions/addNewUserInDB');
+const changeUserImageInDB = require('./messageActions/changeUserImageInDB');
+const clientChangeImageBroadcast = require('./messageActions/clientChangeImageBroadcast');
 // подключенные клиенты
 let clients = {};
 
@@ -44,7 +46,11 @@ webSocketServer.on('connection', (socket) => {
                 sendUsersList(clients);
                 break;
             case 'chat':
-                broadcast(socket, message, clients)
+                broadcast(socket, message, clients);
+                break;
+            case 'change_image':
+                changeUserImageInDB(db, socket, message);
+                clientChangeImageBroadcast(socket, clients);
                 break;
             default:
                 break;
