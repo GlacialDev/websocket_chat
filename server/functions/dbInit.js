@@ -16,19 +16,3 @@ let dbInit = function () {
 }
 
 module.exports = dbInit
-
-// как записать в базу
-// db
-//     .get('users')
-//     .push({
-//         nickname: 'someone',
-//         base64image: 'someone'
-//     })
-//     .write()
-
-
-// как достать из базы и перебрать
-// let array = db.get('users').value();
-// for (let items in array) {
-//     console.log(items[0]);
-// }

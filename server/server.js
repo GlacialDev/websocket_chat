@@ -7,6 +7,8 @@ const sendUsersCount = require('./messageActions/sendUsersCount');
 const sendUsersList = require('./messageActions/sendUsersList');
 const broadcast = require('./messageActions/broadcast');
 const dbInit = require('./functions/dbInit');
+const searchUserDataInDB = require('./messageActions/searchUserDataInDB');
+const addNewUserInDB = require('./messageActions/addNewUserInDB');
 // подключенные клиенты
 let clients = {};
 
@@ -17,7 +19,8 @@ console.log("Сервер запущен на порте: 8080");
 const db = dbInit()
 console.log("db инициализирована");
 
-webSocketServer.on('connection', function (socket) {
+webSocketServer.on('connection', (socket) => {
+    let isExistInDB = false;
     const id = uuidv1();
 
     clients[id] = socket;
@@ -32,6 +35,10 @@ webSocketServer.on('connection', function (socket) {
             // обратно летит сообщение с типом 'authorized', которое обрабатывается на клиенте под цифрой 3)
             case 'authorization':
                 message.id = id;
+                isExistInDB = searchUserDataInDB(db, message);
+                if (!isExistInDB) {
+                    addNewUserInDB(db, message)
+                }
                 authorize(socket, message);
                 sendUsersCount(clients);
                 sendUsersList(clients);
@@ -44,7 +51,7 @@ webSocketServer.on('connection', function (socket) {
         }
     });
 
-    socket.on('close', function () {
+    socket.on('close', () => {
         console.log('соединение закрыто ' + id);
         delete clients[id];
         sendUsersCount(clients);
