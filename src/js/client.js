@@ -8,6 +8,7 @@ import showNewMessage from './actions/showNewMessage';
 import previewImage from './actions/previewImage';
 import sendImageToServer from './actions/sendImageToServer';
 import refreshChat from './actions/refreshChat';
+import closeAndClearImageInput from './functions/closeAndClearImageInput';
 
 const authButton = document.querySelector('.auth__button');
 const nameField = document.querySelector('.welcome__text');
@@ -17,8 +18,16 @@ const loadImgButton = document.querySelectorAll('.load-img__button');
 const loadImgInput = document.querySelector('#load_img');
 const inputButton = document.querySelector('.input__button');
 const inputTextField = document.querySelector('.input__textfield');
-const dropzoneLabel = document.querySelector('.load-img__dropzone-label');
 const socket = new WebSocket('ws://localhost:8080');
+
+// обертка над функцией отправки на сервер нужна для того чтобы
+// можно было вешать и удалять обработчик события клика по кнопке загрузить на сервер
+let base64image = '';
+let sendImageToServerWrapper = function () {
+  sendImageToServer(socket, base64image)
+
+  loadImgButton[1].removeEventListener('click', sendImageToServerWrapper);
+}
 
 // 1) заходит чел, открывается сокет-соединение, он заполняет форму авторизации
 // на сервер улетает сообщение с именем + никнеймом и спец. типом 'authorization'
@@ -54,14 +63,20 @@ socket.onmessage = (message) => {
         }
       });
       image.addEventListener('click', () => loadImg.classList.toggle('load-img--active'));
-      loadImgButton[0].addEventListener('click', () => loadImg.classList.toggle('load-img--active'));
+      // при нажатии на кнопку закрыть должно сбрасываться
+      loadImgButton[0].addEventListener('click', () => {
+        closeAndClearImageInput();
+        loadImgButton[1].removeEventListener('click', sendImageToServerWrapper);
+      });
       loadImgInput.addEventListener('change', () => {
         // если показали превьюху на инпуте загрузки картинки то картинка удовлетворяет требованиям
         // в этом случае вешаем обработчик клика на кнопку отправки на сервер
         // мы удалим его когда придет ответ от сервера что мол ок я поменял
-        previewImage().then(base64image => {
+        previewImage().then(base64image111 => {
+          // eslint-disable-next-line
+          base64image = base64image111;
           loadImgButton[1].classList.remove('load-img__button--inactive');
-          loadImgButton[1].addEventListener('click', send(base64image));
+          loadImgButton[1].addEventListener('click', sendImageToServerWrapper);
         })
       });
       break;
@@ -75,12 +90,8 @@ socket.onmessage = (message) => {
       showNewMessage(message);
       break;
     case 'image_changed':
-      dropzoneLabel.style.backgroundImage = '';
-      dropzoneLabel.innerText = 'Загрузить файл';
-      // удаляем обработчик события отправки с кнопки
-      loadImgButton[1].removeEventListener('click', send);
-      loadImgButton[1].classList.add('load-img__button--inactive');
-      loadImg.classList.remove('load-img--active');
+      closeAndClearImageInput();
+      loadImgButton[1].removeEventListener('click', sendImageToServerWrapper);
       image.src = message.base64image;
       break;
     case 'client_change_image':
@@ -88,12 +99,6 @@ socket.onmessage = (message) => {
       break;
     default:
       break;
-  }
-
-  // обертка над функцией отправки на сервер нужна для того чтобы
-  // можно было вешать и удалять обработчик события клика по кнопке загрузить на сервер
-  let send = function (base64image) {
-    sendImageToServer(socket, base64image)
   }
 };
 
@@ -109,3 +114,4 @@ socket.onclose = (event) => {
 socket.onerror = (error) => {
   console.log('Ошибка ' + error.message);
 };
+
