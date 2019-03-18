@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --open --config ./webpack_config/webpack.dev.conf.js",
     "build": "webpack --config ./webpack_config/webpack.build.conf.js",
-    "serv": "nodemon ./server/server.js localhost 8080"
+    "serv": "nodemon ./server/server.js --ignore db.json localhost 8080"
   },
   "browserslist": [
     "> 1%",
@@ -41,6 +41,7 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "lowdb": "^1.0.0",
     "normalize.css": "^8.0.1",
     "uuid": "^3.3.2",
     "ws": "^6.2.0"

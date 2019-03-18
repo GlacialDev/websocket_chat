@@ -11,11 +11,12 @@ const nameField = document.querySelector('.welcome__text');
 const image = document.querySelector('.welcome__photo');
 const inputButton = document.querySelector('.input__button');
 const socket = new WebSocket('ws://localhost:8080');
+// const chatMessageList = document.querySelector('.chat__message-list');
 
 // 1) заходит чел, открывается сокет-соединение, он заполняет форму авторизации
 // на сервер улетает сообщение с именем + никнеймом и спец. типом 'authorization'
 // на сервере обработка под цифрой 2)
-socket.onopen = function () {
+socket.onopen = () => {
   authButton.addEventListener('click', () => {
     let data = auth.getData();
 
@@ -24,7 +25,7 @@ socket.onopen = function () {
   auth.switchView();
 };
 
-socket.onmessage = function (message) {
+socket.onmessage = (message) => {
   message = JSON.parse(message.data);
 
   switch (message.type) {
@@ -50,7 +51,7 @@ socket.onmessage = function (message) {
   }
 };
 
-socket.onclose = function (event) {
+socket.onclose = (event) => {
   if (event.wasClean) {
     console.log('Соединение закрыто чисто');
   } else {
@@ -59,6 +60,6 @@ socket.onclose = function (event) {
   console.log('Код: ' + event.code + ' причина: ' + event.reason);
 };
 
-socket.onerror = function (error) {
+socket.onerror = (error) => {
   console.log('Ошибка ' + error.message);
 };

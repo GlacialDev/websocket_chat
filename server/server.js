@@ -6,6 +6,7 @@ const authorize = require('./messageActions/authorize');
 const sendUsersCount = require('./messageActions/sendUsersCount');
 const sendUsersList = require('./messageActions/sendUsersList');
 const broadcast = require('./messageActions/broadcast');
+const dbInit = require('./functions/dbInit');
 // подключенные клиенты
 let clients = {};
 
@@ -13,6 +14,8 @@ const webSocketServer = new WebSocketServer.Server({
     port: 8080
 });
 console.log("Сервер запущен на порте: 8080");
+const db = dbInit()
+console.log("db инициализирована");
 
 webSocketServer.on('connection', function (socket) {
     const id = uuidv1();
