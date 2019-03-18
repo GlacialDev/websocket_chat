@@ -71,10 +71,11 @@ socket.onmessage = (message) => {
       loadImgInput.addEventListener('change', () => {
         // если показали превьюху на инпуте загрузки картинки то картинка удовлетворяет требованиям
         // в этом случае вешаем обработчик клика на кнопку отправки на сервер
-        // мы удалим его когда придет ответ от сервера что мол ок я поменял
-        previewImage().then(base64image111 => {
+        // мы удалим его когда придет ответ от сервера что мол ок я поменял или если закроем инпут
+        previewImage().then(base64imageResult => {
+          // сохраняем картинку из промиса для того чтобы функция в обработчике могла её использовать
           // eslint-disable-next-line
-          base64image = base64image111;
+          base64image = base64imageResult;
           loadImgButton[1].classList.remove('load-img__button--inactive');
           loadImgButton[1].addEventListener('click', sendImageToServerWrapper);
         })
