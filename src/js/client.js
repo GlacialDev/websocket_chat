@@ -10,6 +10,7 @@ import sendImageToServer from './actions/sendImageToServer';
 import refreshChat from './actions/refreshChat';
 import closeAndClearImageInput from './functions/closeAndClearImageInput';
 import initImageInputDnD from './functions/initImageInputDnD';
+import getChatHistory from './actions/getChatHistory';
 
 const authButton = document.querySelector('.auth__button');
 const nameField = document.querySelector('.welcome__text');
@@ -87,6 +88,9 @@ socket.onmessage = (message) => {
       break;
     case 'userlist':
       getUsersList(message);
+      break;
+    case 'chat_history':
+      getChatHistory(message);
       break;
     case 'chat':
       showNewMessage(message);

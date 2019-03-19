@@ -11,6 +11,8 @@ const searchUserDataInDB = require('./messageActions/searchUserDataInDB');
 const addNewUserInDB = require('./messageActions/addNewUserInDB');
 const changeUserImageInDB = require('./messageActions/changeUserImageInDB');
 const clientChangeImageBroadcast = require('./messageActions/clientChangeImageBroadcast');
+const saveMessageInChatHistory = require('./messageActions/saveMessageInChatHistory');
+const sendChatHistory = require('./messageActions/sendChatHistory');
 // подключенные клиенты
 let clients = {};
 
@@ -44,8 +46,10 @@ webSocketServer.on('connection', (socket) => {
                 authorize(socket, message);
                 sendUsersCount(clients);
                 sendUsersList(clients);
+                sendChatHistory(db, socket);
                 break;
             case 'chat':
+                saveMessageInChatHistory(db, socket, message);
                 broadcast(socket, message, clients);
                 break;
             case 'change_image':
