@@ -9,6 +9,7 @@ import previewImage from './actions/previewImage';
 import sendImageToServer from './actions/sendImageToServer';
 import refreshChat from './actions/refreshChat';
 import closeAndClearImageInput from './functions/closeAndClearImageInput';
+import initImageInputDnD from './functions/initImageInputDnD';
 
 const authButton = document.querySelector('.auth__button');
 const nameField = document.querySelector('.welcome__text');
@@ -22,10 +23,9 @@ const socket = new WebSocket('ws://localhost:8080');
 
 // обертка над функцией отправки на сервер нужна для того чтобы
 // можно было вешать и удалять обработчик события клика по кнопке загрузить на сервер
-let base64image = '';
+let _base64image = '';
 let sendImageToServerWrapper = function () {
-  sendImageToServer(socket, base64image)
-
+  sendImageToServer(socket, _base64image);
   loadImgButton[1].removeEventListener('click', sendImageToServerWrapper);
 }
 
@@ -72,14 +72,15 @@ socket.onmessage = (message) => {
         // если показали превьюху на инпуте загрузки картинки то картинка удовлетворяет требованиям
         // в этом случае вешаем обработчик клика на кнопку отправки на сервер
         // мы удалим его когда придет ответ от сервера что мол ок я поменял или если закроем инпут
-        previewImage().then(base64imageResult => {
+        previewImage(loadImgInput.files[0]).then(base64image => {
           // сохраняем картинку из промиса для того чтобы функция в обработчике могла её использовать
-          // eslint-disable-next-line
-          base64image = base64imageResult;
+          _base64image = base64image;
           loadImgButton[1].classList.remove('load-img__button--inactive');
           loadImgButton[1].addEventListener('click', sendImageToServerWrapper);
         })
       });
+      // вешаем драгндроп на инпут картинок
+      initImageInputDnD(socket, _base64image);
       break;
     case 'count':
       getUsersCount(message);
@@ -115,4 +116,3 @@ socket.onclose = (event) => {
 socket.onerror = (error) => {
   console.log('Ошибка ' + error.message);
 };
-

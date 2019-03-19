@@ -4,7 +4,10 @@ let sendUsersCount = function (clients) {
     let count = 0;
 
     for (let client in clients) {
-        ++count
+        // проверка нужна чтобы в usercount-e не считались неавторизованные участники
+        if (clients[client].nickname) {
+            ++count
+        }
     }
 
     let data = JSON.stringify({

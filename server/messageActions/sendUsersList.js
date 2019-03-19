@@ -4,12 +4,15 @@ let sendUsersList = function (clients) {
     let userlist = [];
 
     for (let client in clients) {
-        let clientData = {
-            name: clients[client].name,
-            nickname: clients[client].nickname
-        }
+        // проверка нужна чтобы в userlist-е не показывалось undefined
+        if (clients[client].nickname) {
+            let clientData = {
+                name: clients[client].name,
+                nickname: clients[client].nickname
+            }
 
-        userlist.push(clientData)
+            userlist.push(clientData)
+        }
     }
 
     let data = JSON.stringify({

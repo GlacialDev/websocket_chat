@@ -1,7 +1,6 @@
 'use strict'
 
 let changeUserImageInDB = function (db, socket, message) {
-    console.log('change');
     db
         .get('users')
         .find({ nickname: socket.nickname })

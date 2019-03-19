@@ -1,14 +1,14 @@
 'use strict'
 
-const loadImgInput = document.querySelector('#load_img');
+// const loadImgInput = document.querySelector('#load_img');
 const dropzoneLabel = document.querySelector('.load-img__dropzone-label');
 const errorAlert = document.querySelector('.load-img__alert');
 
-let previewImage = function () {
+let previewImage = function (file) {
   return new Promise((resolve, reject) => {
-    if (loadImgInput.files[0].size <= 512 * 1024) {
+    if (file.size <= 512 * 1024) {
       errorAlert.style.opacity = 0;
-      renderImage(loadImgInput.files[0]).then(base64image => resolve(base64image));
+      renderImage(file).then(base64image => resolve(base64image));
     } else {
       errorAlert.style.opacity = 1;
       reject();
