@@ -16,7 +16,6 @@ let changeUserImageInDB = function (db, socket, message) {
             }
         });
 
-
     let data = JSON.stringify({
         type: 'image_changed',
         base64image: message.base64image

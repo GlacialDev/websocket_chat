@@ -20,6 +20,7 @@ const loadImgButton = document.querySelectorAll('.load-img__button');
 const loadImgInput = document.querySelector('#load_img');
 const inputButton = document.querySelector('.input__button');
 const inputTextField = document.querySelector('.input__textfield');
+const messageList = document.querySelector('.chat__message-list');
 const socket = new WebSocket('ws://localhost:8080');
 
 // обертка над функцией отправки на сервер нужна для того чтобы
@@ -91,9 +92,11 @@ socket.onmessage = (message) => {
       break;
     case 'chat_history':
       getChatHistory(message);
+      messageList.scrollTop = messageList.scrollHeight;
       break;
     case 'chat':
       showNewMessage(message);
+      messageList.scrollTop = messageList.scrollHeight;
       break;
     case 'image_changed':
       closeAndClearImageInput();
