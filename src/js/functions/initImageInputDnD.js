@@ -9,7 +9,6 @@ const loadImgButton = document.querySelectorAll('.load-img__button');
 let initImageInputDnD = function (socket, _base64image) {
   let sendImageToServerWrapper = function () {
     sendImageToServer(socket, _base64image);
-    loadImgButton[1].removeEventListener('click', sendImageToServerWrapper);
   };
 
   ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -28,7 +27,7 @@ let initImageInputDnD = function (socket, _base64image) {
       // сохраняем картинку из промиса для того чтобы функция в обработчике могла её использовать
       _base64image = base64image;
       loadImgButton[1].classList.remove('load-img__button--inactive');
-      loadImgButton[1].addEventListener('click', sendImageToServerWrapper);
+      loadImgButton[1].addEventListener('click', sendImageToServerWrapper, { once: true });
     });
 
     return false;

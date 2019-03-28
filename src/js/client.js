@@ -28,7 +28,7 @@ const socket = new WebSocket('ws://localhost:8080');
 let _base64image = '';
 let sendImageToServerWrapper = function () {
   sendImageToServer(socket, _base64image);
-  loadImgButton[1].removeEventListener('click', sendImageToServerWrapper);
+  // loadImgButton[1].removeEventListener('click', sendImageToServerWrapper);
 }
 
 // 1) заходит чел, открывается сокет-соединение, он заполняет форму авторизации
@@ -68,7 +68,6 @@ socket.onmessage = (message) => {
       // при нажатии на кнопку закрыть должно сбрасываться
       loadImgButton[0].addEventListener('click', () => {
         closeAndClearImageInput();
-        loadImgButton[1].removeEventListener('click', sendImageToServerWrapper);
       });
       loadImgInput.addEventListener('change', () => {
         // если показали превьюху на инпуте загрузки картинки то картинка удовлетворяет требованиям
@@ -78,7 +77,7 @@ socket.onmessage = (message) => {
           // сохраняем картинку из промиса для того чтобы функция в обработчике могла её использовать
           _base64image = base64image;
           loadImgButton[1].classList.remove('load-img__button--inactive');
-          loadImgButton[1].addEventListener('click', sendImageToServerWrapper);
+          loadImgButton[1].addEventListener('click', sendImageToServerWrapper, { once: true });
         })
       });
       // вешаем драгндроп на инпут картинок
@@ -100,7 +99,6 @@ socket.onmessage = (message) => {
       break;
     case 'image_changed':
       closeAndClearImageInput();
-      loadImgButton[1].removeEventListener('click', sendImageToServerWrapper);
       image.src = message.base64image;
       break;
     case 'client_change_image':
